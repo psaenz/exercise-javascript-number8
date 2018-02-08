@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+	<head>
+		<title>Number9 - Javascript Exercise - Pedro Saenz</title>
+		
+		<style>
+			.smallInput{ 
+				width: 60px;
+			}
+			
+			div.calendarsContainer{
+				width: 20%;
+				background-color: green;
+			}
+			
+			div.calendarsContainer ul,
+			div.calendar ul{
+				list-style-type: none;
+			}
+
+			div.calendarsContainer li,
+			div.calendar li{
+				float: left;
+				width: 14.28%; /* 100% / 7 days = 14.28% */
+			}
+
+			div.calendar {
+				background-color: red;
+			}
+			
+			.calendar .header {
+				width: 100%;
+				display: inherit;
+				text-align: center;
+				background-color:#eff6d4;
+			}
+			
+			.calendar .week {
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			.calendar .day {
+				text-align: center;
+				background-color: #cacdcc;
+			}
+			.calendar .weekend {
+				background-color: #fcfe3b; /*yellow*/
+			}
+			.calendar .weekday {
+				background-color: #c9dea6; /*green*/
+			}
+			.calendar .holyday {
+				background-color: #ed7a23; /*orange*/
+			}
+		</style>
+	</head>
+	
+	<body>
+		<h1>Monlty Calendar</h1>
+		
+		<form>
+			<label for="startDate">Start Date</label>
+			<input type="date" id="startDate"/>
+			
+			<label for="numberOfDays">Number of Days</label>
+			<input type="number" id="numberOfDays" class="smallInput" />
+			
+			<label for="countryCode">Country Code</label>
+			<input type="text" id="countryCode" class="smallInput"/>
+			
+			<input type="button" value="Update Calendars" >
+		</form>
+		
+		<div class="calendarsContainer">
+			<ul style="clear: both;">
+				<li>S</li>
+				<li>M</li>
+				<li>T</li>
+				<li>W</li>
+				<li>T</li>
+				<li>F</li>
+				<li>S</li>
+			</ul>
+			<div id="calendarsPlaceHolder">
+				<!-- Caledar for August -->
+				<div class="calendar">
+					<span class="header">August 2008</span>
+					<ul class="week">
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day weekday">15</li>
+						<li class="day weekend">16</li>
+					</ul>
+					<ul class="week">
+						<li class="day weekend">17</li>
+						<li class="day weekday">18</li>
+						<li class="day weekday">19</li>
+						<li class="day weekday">20</li>
+						<li class="day weekday">21</li>
+						<li class="day weekday">22</li>
+						<li class="day weekend">23</li>
+					</ul>
+					<ul class="week">
+						<li class="day weekend">24</li>
+						<li class="day weekday">25</li>
+						<li class="day weekday">26</li>
+						<li class="day weekday">27</li>
+						<li class="day weekday">28</li>
+						<li class="day weekday">29</li>
+						<li class="day weekend">30</li>
+					</ul>
+					<ul class="week">
+						<li class="day weekend">31</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+					</ul>
+				</div>
+				
+				<!-- Caledar for September -->
+				<div class="calendar">
+					<span class="header">September 2008</span>
+					<ul class="week">
+						<li class="day">&nbsp;</li>
+						<li class="day holyday">1</li>
+						<li class="day weekday">2</li>
+						<li class="day weekday">3</li>
+						<li class="day weekday">4</li>
+						<li class="day weekday">5</li>
+						<li class="day weekend">6</li>
+					</ul>
+					<ul class="week">
+						<li class="day weekend">7</li>
+						<li class="day weekday">8</li>
+						<li class="day weekday">9</li>
+						<li class="day weekday">10</li>
+						<li class="day weekday">11</li>
+						<li class="day weekday">12</li>
+						<li class="day weekend">13</li>
+					</ul>
+					<ul class="week">
+						<li class="day weekend">14</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+						<li class="day">&nbsp;</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
