@@ -5,52 +5,49 @@
 		<title>Number9 - Javascript Exercise - Pedro Saenz</title>
 		
 		<style>
-			.smallInput{ 
+			.smallInput { 
 				width: 60px;
 			}
 			
-			div.calendarsContainer{
+			div.calendarsContainer {
 				width: 20%;
-				background-color: green;
 			}
 			
 			div.calendarsContainer ul,
-			div.calendar ul{
+			div.calendar ul {
+				padding: 0px;
+				text-align: center;
 				list-style-type: none;
 			}
 
 			div.calendarsContainer li,
-			div.calendar li{
+			div.calendar li {
 				float: left;
 				width: 14.28%; /* 100% / 7 days = 14.28% */
 			}
 
-			div.calendar {
-				background-color: red;
-			}
-			
 			.calendar .header {
 				width: 100%;
-				display: inherit;
+				display: inline-block;
 				text-align: center;
 				background-color:#eff6d4;
 			}
 			
 			.calendar .week {
-				padding: 0px;
-				margin: 0px;
 			}
 			
 			.calendar .day {
-				text-align: center;
 				background-color: #cacdcc;
 			}
+
 			.calendar .weekend {
 				background-color: #fcfe3b; /*yellow*/
 			}
+
 			.calendar .weekday {
 				background-color: #c9dea6; /*green*/
 			}
+
 			.calendar .holyday {
 				background-color: #ed7a23; /*orange*/
 			}
@@ -70,11 +67,11 @@
 			<label for="countryCode">Country Code</label>
 			<input type="text" id="countryCode" class="smallInput"/>
 			
-			<input type="button" value="Update Calendars" >
+			<input type="button" id="updateCalendarsBtn" value="Update Calendars" >
 		</form>
 		
 		<div class="calendarsContainer">
-			<ul style="clear: both;">
+			<ul class="weekdays">
 				<li>S</li>
 				<li>M</li>
 				<li>T</li>
@@ -84,7 +81,8 @@
 				<li>S</li>
 			</ul>
 			<div id="calendarsPlaceHolder">
-				<!-- Caledar for August -->
+				<!-- Calendar for August -->
+				<!--
 				<div class="calendar">
 					<span class="header">August 2008</span>
 					<ul class="week">
@@ -124,8 +122,10 @@
 						<li class="day">&nbsp;</li>
 					</ul>
 				</div>
+				-->
 				
-				<!-- Caledar for September -->
+				<!-- Calendar for September -->
+				<!--
 				<div class="calendar">
 					<span class="header">September 2008</span>
 					<ul class="week">
@@ -156,7 +156,185 @@
 						<li class="day">&nbsp;</li>
 					</ul>
 				</div>
+				-->
 			</div>
 		</div>
+		
+		<script>
+			function statUp(){
+				// links dom events with JS functions
+				document.getElementById("updateCalendarsBtn").onclick = updateCalendarsAction;
+				
+				// display the default calendar
+				updateCalendarsAction();
+			}
+			
+			function updateCalendarsAction(){
+				var jsonTest = [
+					{ // August
+						monthTitle: "August 2008",
+						weeks: [
+								{ // week 1
+									days: [
+										{isHoliday: false, dayOfWeek: 5, day: 15},
+										{isHoliday: false, dayOfWeek: 6, day: 16}
+									]
+								},
+								{ // week 2
+									days: [
+										{isHoliday: false, dayOfWeek: 0, day: 17},
+										{isHoliday: false, dayOfWeek: 1, day: 18},
+										{isHoliday: false, dayOfWeek: 2, day: 19},
+										{isHoliday: false, dayOfWeek: 3, day: 20},
+										{isHoliday: false, dayOfWeek: 4, day: 21},
+										{isHoliday: false, dayOfWeek: 5, day: 22},
+										{isHoliday: false, dayOfWeek: 6, day: 23}
+									]
+								},
+								{ // week 3
+									days: [
+										{isHoliday: false, dayOfWeek: 0, day: 24},
+										{isHoliday: false, dayOfWeek: 1, day: 25},
+										{isHoliday: false, dayOfWeek: 2, day: 26},
+										{isHoliday: false, dayOfWeek: 3, day: 27},
+										{isHoliday: false, dayOfWeek: 4, day: 28},
+										{isHoliday: false, dayOfWeek: 5, day: 29},
+										{isHoliday: false, dayOfWeek: 6, day: 30}
+									]
+								},
+								{ // week 4
+									days: [
+										{isHoliday: false, dayOfWeek: 0, day: 31},
+									]
+								}
+							] // end weeks array
+					}, // end August
+					{ // September
+						monthTitle: "September 2008",
+						weeks: [
+								{ // week 1
+									days: [
+										{isHoliday: true, dayOfWeek: 1, day: 1},
+										{isHoliday: false, dayOfWeek: 2, day: 2},
+										{isHoliday: false, dayOfWeek: 3, day: 3},
+										{isHoliday: false, dayOfWeek: 4, day: 4},
+										{isHoliday: false, dayOfWeek: 5, day: 5},
+										{isHoliday: false, dayOfWeek: 6, day: 6}
+									]
+								},
+								{ // week 2
+									days: [
+										{isHoliday: false, dayOfWeek: 0, day: 7},
+										{isHoliday: false, dayOfWeek: 1, day: 8},
+										{isHoliday: false, dayOfWeek: 2, day: 9},
+										{isHoliday: false, dayOfWeek: 3, day: 10},
+										{isHoliday: false, dayOfWeek: 4, day: 11},
+										{isHoliday: false, dayOfWeek: 5, day: 12},
+										{isHoliday: false, dayOfWeek: 6, day: 13}
+									]
+								},
+								{ // week 3
+									days: [
+										{isHoliday: false, dayOfWeek: 0, day: 14},
+									]
+								}
+							] // end weeks array
+					}, // end September					
+				]; // end jsonTest
+			
+				createCalendars(jsonTest);
+			}
+
+			function createCalendars(monthInfoArray){
+				var calendarBuilder = new CalendarBuilder();
+				var calendarHtml = "";
+				var months = monthInfoArray.length;
+
+				for(var i = 0; i < months; i++){
+					calendarHtml += calendarBuilder.createCalendar(monthInfoArray[i]);
+				}
+
+				document.getElementById("calendarsPlaceHolder").innerHTML = calendarHtml;
+			}
+			
+			// CalendarBuilder is a contructor function that returns an object with a single public method: createCalendar
+			function CalendarBuilder(){
+				
+				// Single public method
+				this.createCalendar = createCalendar;
+				
+				/*  Invalid calendar days could be used more than once in a calendar, 
+					since all of them look the same, we just create the HTML string once
+					and reuse it many times
+				*/
+				const emptyWeekDay = "<li class=\"day\">&nbsp;</li>";
+								
+				/*
+					The monthInfo is a json object like: 
+					{
+						monthTitle: 'August 2008',
+						weeks : [...array of weeks...]
+					}
+				*/
+				function createCalendar(monthInfo){
+					var str = "<div class=\"calendar\">";
+					str += createMonthTitle(monthInfo.monthTitle);
+
+					var weeks = monthInfo.weeks.length;
+					for(var i = 0; i < weeks; i++){
+						str += createWeek(monthInfo.weeks[i]);
+					}
+					
+					str += "</div>";
+					return str;
+				}
+				
+				function createMonthTitle(monthTitle){
+					return "<span class=\"header\">" + monthTitle + "</span>";
+				}
+
+				/*
+					The weekInfo is a json object like: 
+					{
+						days : [...array of days...]
+					}
+					I'm using a JSON parameter with a single array so far, but I will be adding more properties later
+				*/
+				function createWeek(weekInfo){
+					var week = "<ul class=\"week\">";
+					var days = weekInfo.days.length;
+					var isWeekend = false;
+
+					// Draws inactive days before the first active day of the week
+					for(var i = 0; i < weekInfo.days[0].dayOfWeek; i++){
+						week += emptyWeekDay;
+					}
+					
+					// Draws active days of the week
+					var dayInfo;
+					for(var i = 0; i < days; i++){
+						dayInfo = weekInfo.days[i];
+						isWeekend = dayInfo.dayOfWeek == 0 || dayInfo.dayOfWeek == 6;
+						week += createDay(isWeekend, dayInfo);
+					}
+
+					// Draws inactive days after the last active day of the week
+					for(var i = weekInfo.days[days - 1].dayOfWeek + 1; i < 7; i++){
+						week += emptyWeekDay;
+					}
+
+					week += "</ul>";
+					return week;
+				}
+
+				function createDay(isWeekend, dayInfo){
+					return "<li class=\"day " + (isWeekend ? "weekend" : "weekday") +
+											  (dayInfo.isHoliday ? " holyday" : "") + "\">" +
+											  dayInfo.day + "</li>";
+				}
+			} // close calendarBuilder
+			
+			window.onload = statUp;
+		</script>
 	</body>
 </html>
