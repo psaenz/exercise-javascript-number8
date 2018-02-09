@@ -58,16 +58,16 @@
 		<h1>Monlty Calendar</h1>
 		
 		<form>
-			<label for="startDate">Start Date</label>
-			<input type="date" id="startDate"/>
+			<label for="txtStartDate">Start Date</label>
+			<input type="date" id="txtStartDate" value="2008-08-16"/>
 			
-			<label for="numberOfDays">Number of Days</label>
-			<input type="number" id="numberOfDays" class="smallInput" />
+			<label for="txtNumberOfDays">Number of Days</label>
+			<input type="number" id="txtNumberOfDays" class="smallInput" value="31"/>
 			
-			<label for="countryCode">Country Code</label>
-			<input type="text" id="countryCode" class="smallInput"/>
-			
-			<input type="button" id="updateCalendarsBtn" value="Update Calendars" >
+			<label for="txtCountryCode">Country Code</label>
+			<input type="text" id="txtCountryCode" class="smallInput" value="US"/>
+
+			<input type="button" id="btnUpdateCalendars" value="Update Calendars" >
 		</form>
 		
 		<div class="calendarsContainer">
@@ -163,13 +163,81 @@
 		<script>
 			function statUp(){
 				// links dom events with JS functions
-				document.getElementById("updateCalendarsBtn").onclick = updateCalendarsAction;
+				document.getElementById("btnUpdateCalendars").onclick = updateCalendarsAction;
 				
-				// display the default calendar
-				updateCalendarsAction();
+				// displays the sample calendar comming in the exercise description document
+				displayDefaultCalendar();
 			}
 			
 			function updateCalendarsAction(){
+				// TODO: something is happening here, it is always returning the day before (timezones? is it zero based?)
+				var date = document.getElementById("txtStartDate").valueAsDate;
+				var numberOfDays = document.getElementById("txtNumberOfDays").value;
+				
+				/* TODO: the exercise documentation didn't say anything about the country code other that just add an input. 
+				I'm using it to display the month title in the corresponding language*/
+				var countryCode = document.getElementById("txtCountryCode").value;
+				
+				var monthsArray = []; // array of all the months
+				var monthInfo = {month: -1}; // information about a single month, includes an arrya of weeks
+				var weekInfo = {}; // information about a single week (includes an array of days)
+				var currentDayOfWeek; // index of the current day of week
+
+				for(var i = 0; i < numberOfDays; i++){
+					if (monthInfo.month != date.getMonth()){
+					
+						if (monthInfo.month != -1){
+							console.log("Month Info:");
+							console.log(monthInfo);
+						}
+						// If the month of the date is different than the month 
+						// we were working in, then creates an initializes a new monthInfo object
+						weekInfo = {
+							days: []
+						};
+						monthInfo = {
+							month: date.getMonth(),
+							monthTitle: date.toLocaleString(countryCode, {month: "long"}) + " " + date.getFullYear(),
+							weeks: [weekInfo]
+						};
+						monthsArray.push(monthInfo);
+						currentDayOfWeek = date.getDay()
+					}
+					
+					if (currentDayOfWeek == 7){
+						console.log("Week Info:");
+						console.log(weekInfo);
+						// If the current week is full, then creates and initializes a new one
+						weekInfo = {
+							days: []
+						};
+						monthInfo.weeks.push(weekInfo);
+						currentDayOfWeek = 0; // sets the current week as empty
+					}
+					
+					weekInfo.days.push(
+						{
+							isHoliday: false,  // TODO: here we should the http://holidayapi.com/ to update this flag
+							day: date.getDate(),
+							dayOfWeek: currentDayOfWeek
+						}
+					);
+
+					// moves to the next day
+					currentDayOfWeek += 1;
+					date.setDate(date.getDate() + 1);
+				}
+
+				console.log("Week Info:");
+				console.log(weekInfo);
+
+				console.log("Month Info:");
+				console.log(monthInfo);
+				
+				createCalendars(monthsArray);
+			}
+			
+			function displayDefaultCalendar(){
 				var jsonTest = [
 					{ // August
 						monthTitle: "August 2008",
